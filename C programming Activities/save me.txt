@@ -1,0 +1,173 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+#include <conio.h>
+
+struct date
+{
+	char month[10];
+	int day,year;
+};
+
+struct person
+{
+	char name[20];
+	int age;
+	char gender[10];
+	double number;
+	char email[100];
+	struct date bday;
+};
+
+struct person p, *q;
+
+FILE *f;
+
+char choice;
+
+void Type(const char * c)
+{
+	if (NULL==c)
+	return;
+	
+	while(*c)
+	{
+		printf("%c\xDB", *c++);
+		Sleep(30);
+		printf("\b \b");
+		Sleep(30);
+	}
+	Sleep(300);
+}
+
+void main()
+{
+	system("color 0b");
+	
+	int ans;
+	char dec;
+
+do
+{
+	printf("\n\t\t\t\t\t\xB2\xB2\xB2\xB2  Welcome to Account Tracker  \xB2\xB2\xB2\xB2"); 
+	Type("\n\n\t\t\tThis program was made to gather data information of a user to determine \n\t\t\tif the account is locked, deactivated, active and forgot password.");
+	Sleep(500);
+	Type("\n\n\t\t\t\t\t      Press any key to continue...");
+	getch();
+	system("cls");
+	Sleep(1000);
+
+	Type("\t\t\tThis program can also read and write data from text file or to text file.");
+	Sleep(500);
+	Type("\n\n\t\t\tPlease choose on the following options:\n\n\t\t\t\t1.Write a new file\n\n\t\t\t\t2.Read a file\n");
+	Type("\n\t\t\t\tYour choice: ");
+	scanf("%d",&ans);
+	Type("\n\t\t\t\tWise choice!");
+	Type("\n\n\t\t\t\t\tPress any key to continue...");
+	getch();
+	system("cls");
+	Sleep(1000);
+
+if(ans==1)
+{
+
+q=&p;
+
+if ((f=fopen("account.txt","w"))==NULL)
+{
+	puts("cannot open file");
+	exit(1);
+}
+	printf("\t\t\t\t\t\xB2\xB2\xB2\xB2  ENTER NEW CLIENT RECORD  \xB2\xB2\xB2\xB2");
+	
+	Type("\n\n\t\t\tLast Name,First name (Don't use space): ");
+	scanf("%s",p.name);
+	Type("\t\t\tAge: ");
+	scanf("%d",&p.age); scanf("%c");
+	Type("\t\t\tGender: ");
+	gets(p.gender);
+	Type("\t\t\tPhone Number: ");
+	scanf("%lf",&p.number); scanf("%c");
+	Type("\t\t\tEmail: ");
+	gets(p.email);
+	Type("\n\n\t\t\t\t\t\xB2\xB2\xB2\xB2    Birthday Information    \xB2\xB2\xB2\xB2");
+	Type("\n\n\t\t\tMonth: ");
+	gets(p.bday.month);
+	Type("\t\t\tDay: ");
+	scanf("%d",&p.bday.day);
+	Type("\t\t\tYear: ");
+	scanf("%d",&p.bday.year);
+
+	printf("\n\t\t\t\t\t\xB2\xB2\xB2\xB2    DISPLAY PERSON DATA    \xB2\xB2\xB2\xB2");
+	printf("\nName: %s",p.name);
+	printf("\nAge: %d",p.age);
+	printf("\nGender: %s",p.gender);
+	printf("\nNumber: %.0lf",p.number);
+	printf("\nEmail: %s",p.email);
+	printf("\nBirthdate: %s %d,%d",p.bday.month,p.bday.day, p.bday.year);
+
+	fprintf(f,"%s",q->name);	
+	fprintf(f,"\n%d",q->age);
+	fprintf(f,"\n%s",q->gender);
+	fprintf(f,"\n%.2lf",q->number);
+	fprintf(f,"\n%s",q->email);
+	fprintf(f,"\n%s",q->bday.month);
+	fprintf(f,"\n%d",q->bday.day);
+	fprintf(f,"\n%d",q->bday.year);
+
+fclose(f);
+
+	printf("\nWould you like to make another data? (Y/N)\n");
+	scanf(" %c",&dec);
+}
+
+else if(ans==2)
+{
+q=&p;
+
+if ((f=fopen("account.txt","r"))==NULL)
+{
+	puts("cannot open file");
+	exit(1); 
+}
+	printf("\t\t\t\t----------------------------------------------");
+	printf("\n\t\t\t\t-         LOADING DATA from .txt FILE...     -");
+	printf("\n\t\t\t\t----------------------------------------------");
+	Sleep(2000);
+	system("cls");
+
+	fgets(q->name,20,f);
+	fscanf(f,"\n%d",&q->age);
+	fscanf(f,"\n%s",&q->gender);
+	fscanf(f,"\n%lf",&q->number);
+	fscanf(f,"\n%s",&q->email);
+	fscanf(f,"\n%s",&q->bday.month);
+	fscanf(f,"\n%d",&q->bday.day);
+	fscanf(f,"\n%d",&q->bday.year);
+
+	printf("\n\n\t\t\t\t----------------------------------------------");
+	printf("\n\t\t\t\t-             DISPLAY CLIENT DATA            -");
+	printf("\n\t\t\t\t----------------------------------------------");
+
+	printf("\nName: %s",p.name);
+	printf("Age : %d",p.age);
+	printf("\nGender: %s",p.gender);
+	printf("\nPhone Number: %.2lf",p.number);
+	printf("\nEmail: %s",p.email);
+	printf("\nBirthday Month: %s",p.bday.month);
+	printf("\nBirthday Day: %d",p.bday.day);
+	printf("\nBirthday Year: %d",p.bday.year);
+
+fclose(f);
+
+	printf("\nWould you like to make another data? (Y/N)\n");
+	scanf(" %c",&dec);
+}
+
+else
+{
+	Type("No option");
+}
+
+} while(dec == 'y' || dec == 'Y');
+}
